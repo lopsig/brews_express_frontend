@@ -1,0 +1,45 @@
+services:
+  # Servicio de producción (tu configuración actual mejorada)
+  web:
+    build: 
+      context: .
+      dockerfile: Dockerfile
+    container_name: brews_express_frontend
+    ports:
+      - "5174:80"
+    environment:
+      - TZ=America/Guayaquil
+      - NODE_ENV=production
+    restart: unless-stopped
+
+  # Servicio de desarrollo con hot reload
+  web-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: brews_express_frontend_dev
+    ports:
+      - "5173:5173"  # Puerto diferente para no conflictuar
+    volumes:
+      - .:/app
+      - /app/node_modules  # Evita que node_modules se monte desde el host
+    environment:
+      - TZ=America/Guayaquil
+      - NODE_ENV=development
+    restart: unless-stopped
+    profiles:
+      - dev  # Solo se ejecuta cuando especifiques el profile
+
+  # Opcional: Si tienes backend, puedes agregarlo aquí
+  # backend:
+  #   build: ./backend
+  #   container_name: brews_express_backend
+  #   ports:
+  #     - "3001:3001"
+  #   volumes:
+  #     - ./backend:/app
+  #     - /app/node_modules
+  #   environment:
+  #     - TZ=America/Guayaquil
+  #     - NODE_ENV=development
+  #   restart: unless-stopped
