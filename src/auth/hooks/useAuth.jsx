@@ -1,23 +1,17 @@
-import { useState } from "react";
+import { useContext } from "react";
+import AuthContext from "../contexts/AuthContext.jsx";
 
 
-const useAuth= () => {
-
-  const [token, setToken] = useState(localStorage.getItem('token'));
-
-  const logout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('role');
-    localStorage.removeItem('id_user');
-    
-    
-    
-    setToken(null);
-
-  }
+const useAuth = () => {
+  const context = useContext(AuthContext);
   
-  return { token, logout };
+  if (!context) {
+    throw new Error("useAuth must be used within an AuthProvider");
+  }
+  return context;
 };
+
+
 
 export default useAuth;
 

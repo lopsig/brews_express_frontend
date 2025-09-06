@@ -1,5 +1,4 @@
 import { Navigate, Route, Routes } from "react-router-dom";
-
 import { LoginPage } from "../pages/LoginPage.jsx";
 import { RegisterPage } from "../pages/RegisterPage.jsx";
 import { LandingPage } from "../pages/LandingPage.jsx";

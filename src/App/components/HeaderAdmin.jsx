@@ -5,16 +5,22 @@ import { Divider } from 'primereact/divider';
 import { InputText } from 'primereact/inputtext';
 import { Toolbar } from 'primereact/toolbar';
 import { useNavigate } from "react-router-dom";
-import useAuth from '../../auth/hooks/useAuth';
+import useAuth from '../../auth/hooks/useAuth.jsx';
 
 export const HeaderAdmin = () => {
 
   const navigate = useNavigate();
 
-  const { logout } = useAuth();
+  const { logout, user } = useAuth();
+
   const handleLogout = () => {
-    logout();
-    navigate('/auth/brews_express');
+    try {
+      logout();
+      navigate('/auth/brews_express');
+      console.log('User logged out');
+    } catch (error) {
+      console.error('Error logging out:', error);
+    }
   };
 
 
