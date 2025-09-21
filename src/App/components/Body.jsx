@@ -415,6 +415,10 @@ export const Body = ({ searchTerm }) => {  // ✅ Recibir searchTerm como prop
         title={
           <div style={{ color: '#1F2937', fontWeight: 'bold' }}>
             {brew.name}
+            <div style={{ color: '#6B7280', fontSize: '0.9rem', fontWeight: 'normal', marginTop: '4px' }}>
+              <i className="pi pi-map-marker" style={{ fontSize: '0.8rem', marginRight: '4px' }}></i>
+              {brew.brewery_name || 'Cervecería Desconocida'}
+            </div>
           </div>
         }
         subTitle={
@@ -451,6 +455,15 @@ export const Body = ({ searchTerm }) => {  // ✅ Recibir searchTerm como prop
               SRM: {brew.srm} | IBU: {brew.ibu}
             </small>
           </div>
+        </div>
+
+        <div className="mt-4">
+          <Button
+            label="Detalles"
+            icon="pi pi-external-link"
+            className="p-button-secondary w-full"
+            onClick={() => navigate(`/be/brew-details/${brew._id}`)}
+          />
         </div>
 
       </Card>

@@ -19,6 +19,7 @@ import { RoleBasedRoute } from "../../auth/guards/RouteGuards.jsx";
 import { RoleBasedRedirect } from "../../router/AppRouter.jsx";
 import { AllBrewsAdmin } from "../pages/AllBrewsAdmin.jsx";
 import { UpdateBrewAdmin } from "../pages/UpdateBrewAdmin.jsx";
+import { BrewDetailsPage } from "../pages/BrewDetailsPage.jsx";
 
 
 export const AppRoutes = () => {
@@ -43,6 +44,11 @@ export const AppRoutes = () => {
       <Route path="favourites-user" element={
         <RoleBasedRoute allowedRoles={['user']}>
           <FavouritesUserPage />
+        </RoleBasedRoute>
+      } />
+      <Route path="brew-details/:brewId" element={
+        <RoleBasedRoute allowedRoles={['user']}>
+          <BrewDetailsPage />
         </RoleBasedRoute>
       } />
       <Route path="home-provider" element={
