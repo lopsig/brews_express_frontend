@@ -17,6 +17,8 @@ import { UpdateProfileUserAdmin } from "../pages/UpdateProfileUserAdmin";
 import { OrdersProviderPage } from "../pages/OrdersProviderPage"
 import { RoleBasedRoute } from "../../auth/guards/RouteGuards.jsx";
 import { RoleBasedRedirect } from "../../router/AppRouter.jsx";
+import { AllBrewsAdmin } from "../pages/AllBrewsAdmin.jsx";
+import { UpdateBrewAdmin } from "../pages/UpdateBrewAdmin.jsx";
 
 
 export const AppRoutes = () => {
@@ -106,6 +108,16 @@ export const AppRoutes = () => {
       <Route path="update-profile-user-admin/:userId" element={
         <RoleBasedRoute allowedRoles={['admin']}>
           <UpdateProfileUserAdmin />
+        </RoleBasedRoute>
+      } />
+      <Route path="all-brews-admin/:breweryId" element={
+        <RoleBasedRoute allowedRoles={['admin']}>
+          <AllBrewsAdmin />
+        </RoleBasedRoute>
+      } />
+      <Route path="update-brew-admin/:brewId" element={
+        <RoleBasedRoute allowedRoles={['admin']}>
+          <UpdateBrewAdmin />
         </RoleBasedRoute>
       } />
 

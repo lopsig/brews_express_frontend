@@ -7,13 +7,14 @@ export const AuthProvider = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
+
   useEffect(() => { 
     const initializeAuth = async () => {
       try {
-        // Verificar datos en localStorage
-        const token = localStorage.getItem("token");
-        const role = localStorage.getItem("role");
-        const id_user = localStorage.getItem("id_user");
+        // Verificar datos en sessionStorage
+        const token = sessionStorage.getItem("token");
+        const role = sessionStorage.getItem("role");
+        const id_user = sessionStorage.getItem("id_user");
         if (token && role && id_user) {
           // Si existen, actualizar el estado
           const userData = {
@@ -27,9 +28,9 @@ export const AuthProvider = ({ children }) => {
       } catch (error) {
         console.error("Error initializing auth:", error);
         // En caso de error, limpiar datos corruptos
-        localStorage.removeItem("token");
-        localStorage.removeItem("role");
-        localStorage.removeItem("id_user");
+        sessionStorage.removeItem("token");
+        sessionStorage.removeItem("role");
+        sessionStorage.removeItem("id_user");
         setIsAuthenticated(false);
         setUser(null);
       } finally {
@@ -42,9 +43,9 @@ export const AuthProvider = ({ children }) => {
 
   const login = (userData, token) => {
     try {
-      localStorage.setItem("token", token);
-      localStorage.setItem("role", userData.role);
-      localStorage.setItem("id_user", userData.id_user);
+      sessionStorage.setItem("token", token);
+      sessionStorage.setItem("role", userData.role);
+      sessionStorage.setItem("id_user", userData.id_user);
       setUser(userData);
       setIsAuthenticated(true);
       console.log("User logged in:", userData);
@@ -57,9 +58,9 @@ export const AuthProvider = ({ children }) => {
 
   const logout = () => {
     try {
-      localStorage.removeItem("token");
-      localStorage.removeItem("role");
-      localStorage.removeItem("id_user");
+      sessionStorage.removeItem("token");
+      sessionStorage.removeItem("role");
+      sessionStorage.removeItem("id_user");
       setUser(null);
       setIsAuthenticated(false);
       console.log("User logged out");
@@ -69,15 +70,15 @@ export const AuthProvider = ({ children }) => {
   };
 
   const getToken = () => {
-    return localStorage.getItem("token");
+    return sessionStorage.getItem("token");
   }
 
   const getRole = () => {
-    return localStorage.getItem("role");
+    return sessionStorage.getItem("role");
   }
 
   const getIdUser = () => {
-    return localStorage.getItem("id_user");
+    return sessionStorage.getItem("id_user");
   }
 
   const hasAnyRole = (roles) => {

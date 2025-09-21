@@ -1,100 +1,208 @@
-import axios from "axios"
-import { useState, useEffect } from 'react'
-import { useNavigate, useParams } from "react-router-dom"
+
+
+
+import axios from "axios";
+import { useState, useEffect, useRef } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { Button } from 'primereact/button';
+import { Toast } from 'primereact/toast';
+import { ProgressSpinner } from 'primereact/progressspinner';
+import { DataTable } from 'primereact/datatable';
+import { Column } from 'primereact/column';
+import { HeaderAdmin } from "../components/HeaderAdmin";
+import 'primereact/resources/themes/lara-light-indigo/theme.css';
+import 'primeicons/primeicons.css';
+import 'primereact/resources/primereact.min.css';
 
 export const AllBrewsAdmin = () => {
-  const navigate = useNavigate()
-  const { breweryId } = useParams()
-  const [brews, setBrews] = useState([])
-  const [breweryName, setBreweryName] = useState('')
-  const [loading, setLoading] = useState(true)
+  const navigate = useNavigate();
+  const { breweryId } = useParams();
+  const [brews, setBrews] = useState([]);
+  const [breweryName, setBreweryName] = useState('');
+  const [loading, setLoading] = useState(false);
+  const toast = useRef(null);
 
   const getAuthToken = () => {
-    return localStorage.getItem('token') || sessionStorage.getItem('token')
-  }
+    return localStorage.getItem('token') || sessionStorage.getItem('token');
+  };
 
   const authenticatedAxios = axios.create({
     baseURL: 'http://127.0.0.1:8000',
     headers: {
-      'Authorization': `Bearer ${getAuthToken()}`
-    }
-  })
+      'Authorization': `Bearer ${getAuthToken()}`,
+    },
+  });
 
   useEffect(() => {
-    const fetchBreweryBrews = async () => {
+    const fetchBrews = async () => {
+      setLoading(true);
       try {
-        const response = await authenticatedAxios.get(`/be/admin/brewery_brews/${breweryId}`)
-        setBrews(response.data.brews)
-        setBreweryName(response.data.brewery_name)
+        const response = await authenticatedAxios.get(`/be/admin/brewery_brews/${breweryId}`);
+        setBrews(response.data.brews);
+        setBreweryName(response.data.brewery_name);
       } catch (error) {
-        console.error('Error fetching brewery brews:', error.response ? error.response.data : error.message)
-        alert('Error al cargar las cervezas de la cervecería')
-        navigate('/be/all-provider-admin')
+        console.error('Error fetching brews:', error.response ? error.response.data : error.message);
+        toast.current.show({
+          severity: 'error',
+          summary: 'Error',
+          detail: 'Error al cargar las cervezas de la cervecería.',
+          life: 3000
+        });
       } finally {
-        setLoading(false)
+        setLoading(false);
+      }
+    };
+    if (breweryId) {
+      fetchBrews();
+    }
+  }, [breweryId]);
+
+  const handleUpdateBrew = (brewId) => {
+    navigate(`/be/update-brew-admin/${brewId}`);
+  };
+
+  const handleDeleteBrew = async (brewId, brewName) => {
+    const confirmDelete = window.confirm(`¿Estás seguro de que deseas eliminar la cerveza "${brewName}"? Esta acción no se puede deshacer.`);
+    if (confirmDelete) {
+      try {
+        await authenticatedAxios.delete(`/be/admin/delete_brew/${brewId}`);
+        setBrews(prevBrews => prevBrews.filter(brew => brew._id !== brewId));
+        toast.current.show({
+          severity: 'success',
+          summary: 'Éxito',
+          detail: `Cerveza "${brewName}" eliminada exitosamente.`,
+          life: 3000
+        });
+      } catch (error) {
+        console.error('Error deleting brew:', error.response ? error.response.data : error.message);
+        let errorMessage = 'Error al eliminar la cerveza. Intenta de nuevo.';
+        toast.current.show({
+          severity: 'error',
+          summary: 'Error',
+          detail: errorMessage,
+          life: 3000
+        });
       }
     }
+  };
 
-    if (breweryId) {
-      fetchBreweryBrews()
-    }
-  }, [breweryId])
+  const actionBodyTemplate = (rowData) => {
+    return (
+      <div className="p-d-flex p-jc-end p-gap-2">
+        <Button
+          icon="pi pi-pencil"
+          className="p-button-rounded p-button-success p-button-text p-button-sm"
+          tooltip="Actualizar"
+          onClick={() => handleUpdateBrew(rowData._id)}
+        />
+        <Button
+          icon="pi pi-trash"
+          className="p-button-rounded p-button-danger p-button-text p-button-sm"
+          tooltip="Eliminar"
+          onClick={() => handleDeleteBrew(rowData._id, rowData.name)}
+        />
+      </div>
+    );
+  };
+
+  const logoBodyTemplate = (rowData) => {
+    return (
+      <div className="p-d-flex p-ai-center p-jc-center">
+        <img
+          src={rowData.image || '/src/assets/img/default-brew-logo.png'}
+          alt={rowData.name}
+          style={{ width: '50px', borderRadius: '50%' }}
+        />
+      </div>
+    );
+  };
 
   if (loading) {
-    return <div>Cargando cervezas...</div>
+    return (
+      <div style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '100vh',
+        flexDirection: 'column'
+      }}>
+        <ProgressSpinner style={{ width: '50px', height: '50px' }} strokeWidth="8" animationDuration=".8s" />
+        <p style={{ marginTop: '1rem', color: '#6B7280' }}>Cargando cervezas...</p>
+      </div>
+    );
   }
 
   return (
-    <div style={{ padding: '20px' }}>
-      <h1>Cervezas de {breweryName}</h1>
-      <button onClick={() => navigate('/be/all-provider-admin')}>Regresar a Cervecerías</button>
+    <div style={{
+      minHeight: '100vh',
+      background: 'linear-gradient(135deg, #F3F4F6 0%, #FFFFFF 50%, #E5E7EB 100%)',
+      display: 'flex',
+      flexDirection: 'column',
+    }}>
+      <HeaderAdmin />
+      <Toast ref={toast} />
 
-      {brews.length === 0 ? (
-        <p>Esta cervecería no tiene cervezas registradas.</p>
-      ) : (
-        <div>
-          <p><strong>Total de cervezas:</strong> {brews.length}</p>
-          <ul style={{ listStyle: 'none', padding: 0 }}>
-            {brews.map(brew => (
-              <li key={brew._id} style={{
-                border: '1px solid #ddd',
-                margin: '10px 0',
-                padding: '15px',
-                borderRadius: '8px',
-                backgroundColor: '#f9f9f9'
-              }}>
-                <h3>{brew.name}</h3>
-
-                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
-                  <p><strong>Estilo:</strong> {brew.style}</p>
-                  <p><strong>ABV:</strong> {brew.abv}%</p>
-                  <p><strong>SRM:</strong> {brew.srm}</p>
-                  <p><strong>IBU:</strong> {brew.ibu}</p>
-                  <p><strong>ML:</strong> {brew.ml}</p>
-                  <p><strong>Precio:</strong> ${brew.price}</p>
-                </div>
-
-                {brew.description && (
-                  <p><strong>Descripción:</strong> {brew.description}</p>
-                )}
-
-                {brew.image && (
-                  <div style={{ marginTop: '10px' }}>
-                    <img
-                      src={brew.image}
-                      alt={brew.name}
-                      style={{ width: '150px', height: 'auto', borderRadius: '4px' }}
-                      onError={(e) => {
-                        e.target.style.display = 'none'
-                      }}
-                    />
-                  </div>
-                )}
-              </li>
-            ))}
-          </ul>
+      <div style={{
+        flexGrow: 1,
+        padding: '2rem',
+        maxWidth: '1200px',
+        margin: '0 auto',
+        width: '100%',
+      }}>
+        <div style={{
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          marginBottom: '2rem',
+          flexWrap: 'wrap',
+          gap: '1rem'
+        }}>
+          <h1 style={{ margin: 0, fontSize: '2rem', color: '#1F2937' }}>
+            Cervezas de: {breweryName || 'Cargando...'}
+          </h1>
+          <Button
+            label="Regresar"
+            icon="pi pi-angle-left"
+            className="p-button-secondary"
+            onClick={() => navigate('/be/all-provider-admin')}
+          />
         </div>
-      )}
+
+        {brews.length === 0 ? (
+          <div style={{ textAlign: 'center', padding: '5rem 0' }}>
+            <p style={{ fontSize: '1.2rem', color: '#6B7280' }}>
+              No se encontraron cervezas para esta cervecería.
+            </p>
+          </div>
+        ) : (
+          <div style={{
+            background: '#FFFFFF',
+            borderRadius: '12px',
+            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.05)',
+            overflow: 'hidden',
+          }}>
+            <DataTable
+              value={brews}
+              responsiveLayout="scroll"
+              paginator
+              rows={10}
+              rowsPerPageOptions={[5, 10, 25, 50]}
+              sortField="name"
+              sortOrder={1}
+              emptyMessage="No se encontraron cervezas."
+              className="p-datatable-sm"
+            >
+              <Column header="Imagen" body={logoBodyTemplate} style={{ width: '80px', textAlign: 'center' }}></Column>
+              <Column field="name" header="Nombre" sortable></Column>
+              <Column field="style" header="Estilo" sortable></Column>
+              <Column field="abv" header="ABV (%)" sortable></Column>
+              <Column field="price" header="Precio ($)" sortable></Column>
+              <Column field="description" header="Descripción"></Column>
+              <Column header="Acciones" body={actionBodyTemplate} style={{ width: '150px', textAlign: 'center' }}></Column>
+            </DataTable>
+          </div>
+        )}
+      </div>
     </div>
-  )
-}
+  );
+};

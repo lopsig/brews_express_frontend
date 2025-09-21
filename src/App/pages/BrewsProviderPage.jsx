@@ -160,12 +160,21 @@ export const BrewsProviderPage = ({ searchTerm }) => {  // ✅ Recibir searchTer
     const isDeleting = deletingBrewId === brew._id
 
     const header = (
-      <div style={{ position: 'relative' }}>
+            <div style={{
+        position: 'relative',
+        borderRadius: '12px 12px 0 0',
+        overflow: 'hidden'
+      }}>
         {brew.image ? (
           <img
             alt={brew.name}
             src={brew.image}
-            style={{ width: '100%', height: '200px', objectFit: 'cover' }}
+            style={{
+              width: '100%',
+              height: '220px',
+              objectFit: 'cover',
+              transition: 'transform 0.3s ease'
+            }}
             onError={(e) => {
               e.target.style.display = 'none'
             }}
@@ -174,7 +183,7 @@ export const BrewsProviderPage = ({ searchTerm }) => {  // ✅ Recibir searchTer
           <div style={{
             width: '100%',
             height: '200px',
-            backgroundColor: '#f8f9fa',
+              background: 'linear-gradient(135deg, #F9FAFB 0%, #E5E7EB 100%)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center'
@@ -185,17 +194,31 @@ export const BrewsProviderPage = ({ searchTerm }) => {  // ✅ Recibir searchTer
         <Badge
           value={`$${brew.price}`}
           severity="success"
-          style={{ position: 'absolute', top: '10px', right: '10px' }}
+          style={{
+            position: 'absolute',
+            top: '12px',
+            right: '12px',
+            fontWeight: 'bold',
+            fontSize: '0.9rem',
+            boxShadow: '0 4px 12px rgba(0, 0, 0, 0.15)'
+          }}
         />
       </div>
     )
 
     const footer = (
-      <div className="flex justify-content-between align-items-center gap-2">
+      <div className="flex justify-content-between align-items-center">
         <div className="flex flex-wrap gap-1">
-          <Badge value={brew.style} severity="info" className="text-xs" />
-          <Badge value={`${brew.abv}% ABV`} severity="warning" className="text-xs" />
+          <Badge value={brew.style} severity="info" className="mr-2" />
+          <Badge value={`${brew.abv}% ABV`} severity="warning"/>
         </div>
+        {/* <Button
+          label="Ver Detalles"
+          icon="pi pi-eye"
+          className="p-button-text"
+          onClick={() => console.log('Ver detalles de:', brew.name)}
+        /> */}
+
         <div className="flex gap-1">
           <Button
             icon="pi pi-pencil"
@@ -217,14 +240,29 @@ export const BrewsProviderPage = ({ searchTerm }) => {  // ✅ Recibir searchTer
     return (
       <Card
         key={brew._id}
-        title={brew.name}
-        subTitle={`${brew.ml}ml | SRM: ${brew.srm} | IBU: ${brew.ibu}`}
+        title={
+          <div style={{ color: '#1F2937', fontWeight: 'bold' }}>
+            {brew.name}
+          </div>
+        }
+        subTitle={
+          <div style={{ color: '#6B7280', fontWeight: '500' }}>
+            {brew.ml}ml
+          </div>
+        }
         header={header}
         footer={footer}
-        className={`mb-4 h-full ${isDeleting ? 'opacity-50' : ''}`}
+        className={`mb-4 ${isDeleting ? 'opacity-50' : ''} hover:shadow-lg transition-all duration-300`}
+        style={{
+          height: '100%',
+          borderRadius: '12px',
+          border: '1px solid #E5E7EB',
+          background: '#FFFFFF',
+          boxShadow: '0 2px 8px rgba(0, 0, 0, 0.04)'
+        }}
       >
-        <div style={{ minHeight: '60px' }}>
-          <p className="line-height-3 text-600 text-sm">
+        <div style={{ minHeight: '100px' }}>
+          <p className="line-height-3">
             {brew.description ?
               (brew.description.length > 120 ?
                 `${brew.description.substring(0, 120)}...` :
@@ -233,21 +271,86 @@ export const BrewsProviderPage = ({ searchTerm }) => {  // ✅ Recibir searchTer
               'Sin descripción disponible'
             }
           </p>
+          <div
+            className="mt-3"
+
+          >
+            <small className="text-600">
+              SRM: {brew.srm} | IBU: {brew.ibu}
+            </small>
+          </div>
         </div>
+
       </Card>
     )
   }
 
   return (
-    <div style={{ padding: '20px' }}>
+    <div style={{
+      padding: '24px 16px',
+      background: 'linear-gradient(180deg, #FFFFFF 0%, #F9FAFB 100%)',
+      minHeight: '100vh'
+    }}>
       <Toast ref={toast} />
       <ConfirmDialog />
 
       {/* Panel de filtros */}
-      <Panel header="Filtros de Búsqueda" toggleable collapsed className="mb-4">
-        <div className="grid">
+      <Panel
+        header={
+          <div style={{
+            color: '#1F2937',
+            fontWeight: 'bold',
+            fontSize: '1.1rem',
+            display: 'flex',
+            alignItems: 'center',
+            gap: '8px'
+          }}>
+            <i className="pi pi-filter" />
+            Filtros de Búsqueda
+          </div>
+        }
+        toggleable
+        collapsed
+        className="mb-6"
+        style={{
+          background: '#FFFFFF',
+          border: '1px solid #E5E7EB',
+          borderRadius: '12px',
+          boxShadow: '0 2px 8px rgba(0, 0, 0, 0.04)'
+        }}
+      >
+        <div className="col-12 md:col-6 lg:col-2">
+          <Button
+            label="Limpiar"
+            icon="pi pi-refresh"
+            className="w-full"
+            onClick={clearFilters}
+            style={{
+              background: '#F3F4F6',
+              border: '1px solid #D1D5DB',
+              color: '#374151',
+              borderRadius: '8px',
+              fontWeight: '600',
+              width: '80px',
+
+            }}
+            onMouseEnter={(e) => {
+              e.target.style.background = '#E5E7EB';
+            }}
+            onMouseLeave={(e) => {
+              e.target.style.background = '#F3F4F6';
+            }}
+          />
+        </div>
+        
+
+        <div className="grid gap-4 p-4">
+          
+          
           <div className="col-12 md:col-6 lg:col-3">
-            <label htmlFor="style-filter" className="block text-900 font-medium mb-2">Estilo</label>
+            <label htmlFor="style-filter" className="block font-medium mb-2" style={{ color: '#374151', fontSize: '0.9rem' }}>
+              Estilo de Cerveza
+            </label>
             <Dropdown
               id="style-filter"
               value={selectedStyle}
@@ -256,11 +359,17 @@ export const BrewsProviderPage = ({ searchTerm }) => {  // ✅ Recibir searchTer
               placeholder="Seleccionar estilo"
               className="w-full"
               showClear
+              style={{
+                borderColor: '#D1D5DB',
+                borderRadius: '8px'
+              }}
             />
           </div>
 
           <div className="col-12 md:col-6 lg:col-2">
-            <label htmlFor="min-abv" className="block text-900 font-medium mb-2">ABV Mínimo</label>
+            <label htmlFor="min-abv" className="block font-medium mb-2" style={{ color: '#374151', fontSize: '0.9rem' }}>
+              ABV Mínimo
+            </label>
             <InputNumber
               id="min-abv"
               value={minAbv}
@@ -271,11 +380,17 @@ export const BrewsProviderPage = ({ searchTerm }) => {  // ✅ Recibir searchTer
               min={0}
               max={20}
               step={0.1}
+              style={{
+                borderColor: '#D1D5DB',
+                borderRadius: '8px'
+              }}
             />
           </div>
 
           <div className="col-12 md:col-6 lg:col-2">
-            <label htmlFor="max-abv" className="block text-900 font-medium mb-2">ABV Máximo</label>
+            <label htmlFor="max-abv" className="block font-medium mb-2" style={{ color: '#374151', fontSize: '0.9rem' }}>
+              ABV Máximo
+            </label>
             <InputNumber
               id="max-abv"
               value={maxAbv}
@@ -286,11 +401,17 @@ export const BrewsProviderPage = ({ searchTerm }) => {  // ✅ Recibir searchTer
               min={0}
               max={20}
               step={0.1}
+              style={{
+                borderColor: '#D1D5DB',
+                borderRadius: '8px'
+              }}
             />
           </div>
 
           <div className="col-12 md:col-6 lg:col-2">
-            <label htmlFor="min-price" className="block text-900 font-medium mb-2">Precio Mín</label>
+            <label htmlFor="min-price" className="block font-medium mb-2" style={{ color: '#374151', fontSize: '0.9rem' }}>
+              Precio Mínimo
+            </label>
             <InputNumber
               id="min-price"
               value={minPrice}
@@ -299,12 +420,18 @@ export const BrewsProviderPage = ({ searchTerm }) => {  // ✅ Recibir searchTer
               prefix="$"
               className="w-full"
               min={0}
-              step={0.5}
+              step={0.1}
+              style={{
+                borderColor: '#D1D5DB',
+                borderRadius: '8px'
+              }}
             />
           </div>
 
           <div className="col-12 md:col-6 lg:col-2">
-            <label htmlFor="max-price" className="block text-900 font-medium mb-2">Precio Máx</label>
+            <label htmlFor="max-price" className="block font-medium mb-2" style={{ color: '#374151', fontSize: '0.9rem' }}>
+              Precio Máximo
+            </label>
             <InputNumber
               id="max-price"
               value={maxPrice}
@@ -313,25 +440,29 @@ export const BrewsProviderPage = ({ searchTerm }) => {  // ✅ Recibir searchTer
               prefix="$"
               className="w-full"
               min={0}
-              step={0.5}
+              step={0.1}
+              style={{
+                borderColor: '#D1D5DB',
+                borderRadius: '8px'
+              }}
             />
-          </div>
 
-          <div className="col-12 md:col-12 lg:col-1">
-            <label className="block text-900 font-medium mb-2">&nbsp;</label>
-            <Button
-              label="Limpiar"
-              icon="pi pi-refresh"
-              className="p-button-outlined w-full"
-              onClick={clearFilters}
-            />
+            
           </div>
         </div>
       </Panel>
 
+
       {/* Header con botones de acción */}
-      <div className="flex justify-content-between align-items-center mb-4">
-        <h1>Mis Cervezas</h1>
+      <div className="flex flex-col sm:flex-row justify-between align-items-start sm:align-items-center mb-6 gap-4">
+
+        <h1 style={{
+          color: '#1F2937',
+          fontSize: window.innerWidth < 768 ? '1.8rem' : '2.2rem',
+          fontWeight: 'bold',
+          margin: 0
+        }}>Mis Cervezas</h1>
+      
         <div className="flex align-items-center gap-2">
           <Button
             label="Agregar Cerveza"
@@ -340,8 +471,8 @@ export const BrewsProviderPage = ({ searchTerm }) => {  // ✅ Recibir searchTer
             onClick={() => navigate('/be/create-brew')}
           />
           <Button
-            label="Pedidos"
-            icon="pi pi-shopping-cart"
+            label="Estadísticas"
+            icon="pi pi-chart-bar"
             className="p-button-info"
             onClick={() => navigate('/be/orders-provider')}
           />
@@ -349,28 +480,53 @@ export const BrewsProviderPage = ({ searchTerm }) => {  // ✅ Recibir searchTer
       </div>
 
       {/* Estadísticas */}
-      <div className="flex align-items-center gap-3 mb-4">
-        <Badge
-          value={`${filteredBrews.length} cerveza${filteredBrews.length !== 1 ? 's' : ''}`}
-          severity="info"
-        />
-        {searchTerm && (
-          <Badge
-            value={`Búsqueda: "${searchTerm}"`}
-            severity="warning"
-          />
-        )}
+        <div className="flex flex-wrap align-items-center gap-2">
+          <span
+            style={{
+              background: '#F3F4F6',
+              color: '#374151',
+              padding: '6px 16px',
+              borderRadius: '20px',
+              fontSize: '0.9rem',
+              fontWeight: '600',
+              border: '1px solid #E5E7EB'
+            }}
+          >
+            {filteredBrews.length} resultado{filteredBrews.length !== 1 ? 's' : ''}
+          </span>
+          {searchTerm && (
+            <span
+              style={{
+                background: 'linear-gradient(135deg, #1F2937, #374151)',
+                color: 'white',
+                padding: '6px 16px',
+                borderRadius: '20px',
+                fontSize: '0.9rem',
+                fontWeight: '600'
+              }}
+            >
+              "{searchTerm}"
+            </span>
+          )}
       </div>
 
       {loading ? (
         <div className="grid">
-          {[1, 2, 3, 4].map((item) => (
-            <div key={item} className="col-12 md:col-6 lg:col-4 xl:col-3">
-              <Card>
-                <Skeleton width="100%" height="200px" className="mb-3" />
-                <Skeleton width="60%" height="1.5rem" className="mb-2" />
-                <Skeleton width="100%" height="1rem" className="mb-3" />
-                <Skeleton width="80%" height="1rem" />
+          {[1, 2, 3, 4, 5, 6].map((item) => (
+            <div key={item} className="col-12 sm:col-6 lg:col-4 xl:col-3">
+              <Card style={{
+                background: '#FFFFFF',
+                border: '1px solid #E5E7EB',
+                borderRadius: '12px'
+              }}>
+                <Skeleton width="100%" height="220px" className="mb-3" />
+                <Skeleton width="70%" height="1.5rem" className="mb-2" />
+                <Skeleton width="40%" height="1rem" className="mb-3" />
+                <Skeleton width="100%" height="4rem" className="mb-3" />
+                <div className="flex justify-between">
+                  <Skeleton width="60%" height="1.5rem" />
+                  <Skeleton width="80px" height="2rem" />
+                </div>
               </Card>
             </div>
           ))}
@@ -378,36 +534,38 @@ export const BrewsProviderPage = ({ searchTerm }) => {  // ✅ Recibir searchTer
       ) : (
         <>
           {filteredBrews.length === 0 ? (
-            <div className="text-center p-6">
-              <i className="pi pi-search" style={{ fontSize: '3rem', color: '#6c757d' }}></i>
-              <h3>No se encontraron cervezas</h3>
-              <p>
-                {searchTerm || selectedStyle || minAbv || maxAbv || minPrice || maxPrice
-                  ? 'Intenta ajustar los filtros de búsqueda'
-                  : 'Aún no tienes cervezas registradas'
-                }
+            <div
+              className="text-center p-8"
+              style={{
+                background: '#FFFFFF',
+                borderRadius: '12px',
+                border: '1px solid #E5E7EB',
+                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.04)'
+              }}
+            >
+              <i className="pi pi-search" style={{ fontSize: '4rem', color: '#D1D5DB', marginBottom: '16px' }}></i>
+              <h3 style={{ color: '#1F2937', marginBottom: '8px' }}>No se encontraron cervezas</h3>
+              <p style={{ color: '#6B7280', marginBottom: '24px' }}>
+                Intenta ajustar los filtros de búsqueda o el término de búsqueda
               </p>
-              <div className="flex gap-2 justify-content-center">
-                {(searchTerm || selectedStyle || minAbv || maxAbv || minPrice || maxPrice) && (
-                  <Button
-                    label="Limpiar Filtros"
-                    icon="pi pi-refresh"
-                    className="p-button-outlined"
-                    onClick={clearFilters}
-                  />
-                )}
-                <Button
-                  label="Agregar Cerveza"
-                  icon="pi pi-plus"
-                  className="p-button-success"
-                  onClick={() => navigate('/be/create-brew')}
-                />
-              </div>
+              <Button
+                label="Limpiar Filtros"
+                icon="pi pi-refresh"
+                onClick={clearFilters}
+                style={{
+                  background: 'linear-gradient(135deg, #1F2937, #374151)',
+                  border: 'none',
+                  color: 'white',
+                  padding: '12px 24px',
+                  borderRadius: '8px',
+                  fontWeight: '600'
+                }}
+              />
             </div>
           ) : (
             <div className="grid">
               {filteredBrews.map((brew) => (
-                <div key={brew._id} className="col-12 md:col-6 lg:col-4 xl:col-3">
+                <div key={brew._id} className="col-12 sm:col-6 lg:col-4 xl:col-3">
                   {renderBrewCard(brew)}
                 </div>
               ))}
