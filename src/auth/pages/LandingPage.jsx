@@ -15,7 +15,7 @@ export const LandingPage = () => {
 
   return (
     <div>
-    
+
       <HeaderLanding onSearch={handleSearch} />
       <BodyLanding searchTerm={searchTerm} />
       {/* Footer */}
@@ -25,7 +25,7 @@ export const LandingPage = () => {
           fontSize: '0.75rem',
           margin: 0
         }}>
-          © 2025 LopSigDev. Todos los derechos reservados.
+          © 2025 LopSigDev - Todos los derechos reservados
         </p>
       </div>
     </div>
