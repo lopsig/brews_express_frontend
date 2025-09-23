@@ -7,6 +7,7 @@ import { Skeleton } from 'primereact/skeleton';
 import { Message } from 'primereact/message';
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
 import 'primeicons/primeicons.css';
+const API_URL = import.meta.env.VITE_API_URL
 
 export const BrewDetailsPage = () => {
   const { brewId } = useParams();
@@ -19,7 +20,7 @@ export const BrewDetailsPage = () => {
     const fetchBrewDetails = async () => {
       try {
         // Endpoint para obtener una cerveza por su ID (necesitarás crear este endpoint en tu backend)
-        const response = await axios.get(`http://127.0.0.1:8000/be/brew/${brewId}`);
+        const response = await axios.get(API_URL + `/be/brew/${brewId}`);
         setBrew(response.data.brew);
         setLoading(false);
       } catch (err) {

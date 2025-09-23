@@ -27,7 +27,7 @@
 //             Authorization: `Bearer ${token}`
 //           }
 //         };
-//         const response = await axios.get('http://127.0.0.1:8000/be/my_profile', config);
+//         const response = await axios.get(API_URL+'/be/my_profile', config);
 //         setProfile(response.data.user);
 //         setFormData({
 //           first_name: response.data.user.first_name,
@@ -63,7 +63,7 @@
 //           'Content-Type': 'application/json',
 //         }
 //       };
-//       await axios.put('http://127.0.0.1:8000/be/update_user_profile', formData, config);
+//       await axios.put(API_URL+'/be/update_user_profile', formData, config);
 //       alert("Perfil actualizado con éxito");
 //       navigate('/be/profile-user');
 //     } catch (error) {
@@ -140,7 +140,7 @@ import { FloatLabel } from 'primereact/floatlabel';
 import { Skeleton } from 'primereact/skeleton';
 import 'primeicons/primeicons.css';
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
-
+const API_URL = import.meta.env.VITE_API_URL
 export const UpdateProfileUserPage = () => {
   const navigate = useNavigate();
   const [profile, setProfile] = useState(null);
@@ -181,7 +181,7 @@ export const UpdateProfileUserPage = () => {
       }
       try {
         const config = { headers: { Authorization: `Bearer ${token}` } };
-        const response = await axios.get('http://127.0.0.1:8000/be/my_profile', config);
+        const response = await axios.get(API_URL + '/be/my_profile', config);
         const fetchedProfile = response.data.user;
         setProfile(fetchedProfile);
         setFormData({
@@ -221,7 +221,7 @@ export const UpdateProfileUserPage = () => {
           'Content-Type': 'application/json',
         }
       };
-      await axios.put('http://127.0.0.1:8000/be/update_user_profile', formData, config);
+      await axios.put(API_URL + '/be/update_user_profile', formData, config);
       setUpdateStatus({ message: "Perfil actualizado con éxito.", severity: 'success' });
       setTimeout(() => {
         navigate('/be/profile-user');

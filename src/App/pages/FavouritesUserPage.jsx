@@ -14,7 +14,7 @@
 
 //   // Función para hacer peticiones autenticadas
 //   const authenticatedAxios = axios.create({
-//     baseURL: 'http://127.0.0.1:8000',
+//     baseURL: API_URL,
 //     headers: {
 //       'Authorization': `Bearer ${getAuthToken()}`
 //     }
@@ -117,6 +117,7 @@ import { Message } from 'primereact/message';
 import { Image } from 'primereact/image';
 import 'primeicons/primeicons.css';
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
+const API_URL = import.meta.env.VITE_API_URL
 
 export const FavouritesUserPage = () => {
   const [favourites, setFavourites] = useState([]);
@@ -128,7 +129,7 @@ export const FavouritesUserPage = () => {
 
   const getAuthToken = () => localStorage.getItem('token') || sessionStorage.getItem('token');
   const authenticatedAxios = axios.create({
-    baseURL: 'http://127.0.0.1:8000',
+    baseURL: API_URL,
     headers: {
       'Authorization': `Bearer ${getAuthToken()}`
     }
@@ -320,7 +321,7 @@ export const FavouritesUserPage = () => {
                       <h2 style={{ fontSize: '1.2rem', margin: '0 0 0.5rem 0', fontWeight: 'bold' }}>
                         {favourite.brew_info.name}
                       </h2>
-                      <p style={{ margin: '0', fontSize: '0.9rem', color: '#D1D5DB',   }}>
+                      <p style={{ margin: '0', fontSize: '0.9rem', color: '#D1D5DB', }}>
                         Estilo: {favourite.brew_info.style}
                       </p>
                       <p style={{ margin: '0', fontSize: '0.9rem', color: '#D1D5DB' }}>

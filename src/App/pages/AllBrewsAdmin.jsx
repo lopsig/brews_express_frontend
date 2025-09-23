@@ -21,13 +21,14 @@ export const AllBrewsAdmin = () => {
   const [breweryName, setBreweryName] = useState('');
   const [loading, setLoading] = useState(false);
   const toast = useRef(null);
+  const API_URL = import.meta.env.VITE_API_URL
 
   const getAuthToken = () => {
     return localStorage.getItem('token') || sessionStorage.getItem('token');
   };
 
   const authenticatedAxios = axios.create({
-    baseURL: 'http://127.0.0.1:8000',
+    baseURL: API_URL,
     headers: {
       'Authorization': `Bearer ${getAuthToken()}`,
     },

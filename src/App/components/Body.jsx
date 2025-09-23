@@ -13,7 +13,7 @@
 
 //   // Función para hacer peticiones autenticadas
 //   const authenticatedAxios = axios.create({
-//     baseURL: 'http://127.0.0.1:8000',
+//     baseURL: API_URL,
 //     headers: {
 //       'Authorization': `Bearer ${getAuthToken()}`
 //     }
@@ -23,7 +23,7 @@
 //     const fetchData = async () => {
 //       try {
 //         // Obtener todas las cervezas
-//         const brewsResponse = await axios.get('http://127.0.0.1:8000/be/all_brews')
+//         const brewsResponse = await axios.get(API_URL+'/be/all_brews')
 //         setBrews(brewsResponse.data.brews)
 
 //         // Obtener favoritos del usuario (requiere autenticación)
@@ -168,6 +168,8 @@ import { Toast } from 'primereact/toast'
 import { ConfirmDialog } from 'primereact/confirmdialog'
 import { confirmDialog } from 'primereact/confirmdialog'
 import { useRef } from 'react'
+const API_URL = import.meta.env.VITE_API_URL
+
 
 export const Body = ({ searchTerm }) => {  // ✅ Recibir searchTerm como prop
   const [brews, setBrews] = useState([])
@@ -191,7 +193,7 @@ export const Body = ({ searchTerm }) => {  // ✅ Recibir searchTerm como prop
   }
 
   const authenticatedAxios = axios.create({
-    baseURL: 'http://127.0.0.1:8000',
+    baseURL: API_URL,
     headers: {
       'Authorization': `Bearer ${getAuthToken()}`
     }
@@ -203,7 +205,7 @@ export const Body = ({ searchTerm }) => {  // ✅ Recibir searchTerm como prop
       setLoading(true)
       try {
         // Obtener estilos únicos
-        const stylesResponse = await axios.get('http://127.0.0.1:8000/be/brew_styles')
+        const stylesResponse = await axios.get(API_URL + '/be/brew_styles')
         setStyles(stylesResponse.data.styles.map(style => ({ label: style, value: style })))
 
         // Obtener favoritos del usuario
@@ -240,7 +242,7 @@ export const Body = ({ searchTerm }) => {  // ✅ Recibir searchTerm como prop
         if (maxPrice !== null) params.append('max_price', maxPrice)
 
         const queryString = params.toString()
-        const url = `http://127.0.0.1:8000/be/search_brews${queryString ? `?${queryString}` : ''}`
+        const url = API_URL + `/be/search_brews${queryString ? `?${queryString}` : ''}`
 
         const response = await axios.get(url)
         setFilteredBrews(response.data.brews)
@@ -505,26 +507,26 @@ export const Body = ({ searchTerm }) => {  // ✅ Recibir searchTerm como prop
         }}
       >
         <div className="col-12 md:col-6 lg:col-2">
-                    <Button
-                      label="Limpiar"
-                      icon="pi pi-refresh"
-                      className="w-full"
-                      onClick={clearFilters}
-                      style={{
-                        background: '#F3F4F6',
-                        border: '1px solid #D1D5DB',
-                        color: '#374151',
-                        borderRadius: '8px',
-                        fontWeight: '600',
-                        width: '80px',
-          
-                      }}
-                      onMouseEnter={(e) => {
-                        e.target.style.background = '#E5E7EB';
-                      }}
-                      onMouseLeave={(e) => {
-                        e.target.style.background = '#F3F4F6';
-                      }}
+          <Button
+            label="Limpiar"
+            icon="pi pi-refresh"
+            className="w-full"
+            onClick={clearFilters}
+            style={{
+              background: '#F3F4F6',
+              border: '1px solid #D1D5DB',
+              color: '#374151',
+              borderRadius: '8px',
+              fontWeight: '600',
+              width: '80px',
+
+            }}
+            onMouseEnter={(e) => {
+              e.target.style.background = '#E5E7EB';
+            }}
+            onMouseLeave={(e) => {
+              e.target.style.background = '#F3F4F6';
+            }}
           />
         </div>
 
@@ -569,7 +571,7 @@ export const Body = ({ searchTerm }) => {  // ✅ Recibir searchTerm como prop
               }}
             />
           </div>
-          
+
           <div className="col-12 md:col-6 lg:col-2">
             <label htmlFor="max-abv" className="block font-medium mb-2" style={{ color: '#374151', fontSize: '0.9rem' }}>
               ABV Máximo
@@ -632,22 +634,22 @@ export const Body = ({ searchTerm }) => {  // ✅ Recibir searchTerm como prop
 
 
           </div>
-          
-                  </div>
-      </Panel>
-            <div className="flex flex-col sm:flex-row justify-between align-items-start sm:align-items-center mb-6 gap-4">
-      
-            
-              <div className="flex align-items-center gap-2">
-                <Button
-                  label="Mis Favoritos"
-                  icon="pi pi-heart"
-                  className="p-button-success"
-            onClick={() => navigate('/be/favourites-user')}
-                />
 
-              </div>
-            </div>
+        </div>
+      </Panel>
+      <div className="flex flex-col sm:flex-row justify-between align-items-start sm:align-items-center mb-6 gap-4">
+
+
+        <div className="flex align-items-center gap-2">
+          <Button
+            label="Mis Favoritos"
+            icon="pi pi-heart"
+            className="p-button-success"
+            onClick={() => navigate('/be/favourites-user')}
+          />
+
+        </div>
+      </div>
 
 
 
@@ -684,7 +686,7 @@ export const Body = ({ searchTerm }) => {  // ✅ Recibir searchTerm como prop
         )}
 
       </div>
-      
+
       {loading ? (
         <div className="grid">
           {[1, 2, 3, 4, 5, 6].map((item) => (
@@ -704,40 +706,40 @@ export const Body = ({ searchTerm }) => {  // ✅ Recibir searchTerm como prop
                 </div>
               </Card>
             </div>
-            
+
           ))}
         </div>
       ) : (
         <>
           {filteredBrews.length === 0 ? (
-              <div
-                className="text-center p-8"
+            <div
+              className="text-center p-8"
+              style={{
+                background: '#FFFFFF',
+                borderRadius: '12px',
+                border: '1px solid #E5E7EB',
+                boxShadow: '0 2px 8px rgba(0, 0, 0, 0.04)'
+              }}
+            >
+              <i className="pi pi-search" style={{ fontSize: '4rem', color: '#D1D5DB', marginBottom: '16px' }}></i>
+              <h3 style={{ color: '#1F2937', marginBottom: '8px' }}>No se encontraron cervezas</h3>
+              <p style={{ color: '#6B7280', marginBottom: '24px' }}>
+                Intenta ajustar los filtros de búsqueda o el término de búsqueda
+              </p>
+              <Button
+                label="Limpiar Filtros"
+                icon="pi pi-refresh"
+                onClick={clearFilters}
                 style={{
-                  background: '#FFFFFF',
-                  borderRadius: '12px',
-                  border: '1px solid #E5E7EB',
-                  boxShadow: '0 2px 8px rgba(0, 0, 0, 0.04)'
+                  background: 'linear-gradient(135deg, #1F2937, #374151)',
+                  border: 'none',
+                  color: 'white',
+                  padding: '12px 24px',
+                  borderRadius: '8px',
+                  fontWeight: '600'
                 }}
-              >
-                <i className="pi pi-search" style={{ fontSize: '4rem', color: '#D1D5DB', marginBottom: '16px' }}></i>
-                <h3 style={{ color: '#1F2937', marginBottom: '8px' }}>No se encontraron cervezas</h3>
-                <p style={{ color: '#6B7280', marginBottom: '24px' }}>
-                  Intenta ajustar los filtros de búsqueda o el término de búsqueda
-                </p>
-                <Button
-                  label="Limpiar Filtros"
-                  icon="pi pi-refresh"
-                  onClick={clearFilters}
-                  style={{
-                    background: 'linear-gradient(135deg, #1F2937, #374151)',
-                    border: 'none',
-                    color: 'white',
-                    padding: '12px 24px',
-                    borderRadius: '8px',
-                    fontWeight: '600'
-                  }}
-                />
-              </div>
+              />
+            </div>
 
           ) : (
             <div className="grid">
@@ -751,5 +753,5 @@ export const Body = ({ searchTerm }) => {  // ✅ Recibir searchTerm como prop
         </>
       )}
     </div>
-      )
-  }
+  )
+}

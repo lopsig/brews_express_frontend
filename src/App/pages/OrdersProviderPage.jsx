@@ -13,7 +13,7 @@
 //   }
 
 //   const authenticatedAxios = axios.create({
-//     baseURL: 'http://127.0.0.1:8000',
+//     baseURL: API_URL,
 //     headers: {
 //       'Authorization': `Bearer ${getAuthToken()}`
 //     }
@@ -208,6 +208,7 @@ import { Image } from 'primereact/image';
 import { Badge } from 'primereact/badge';
 import 'primeicons/primeicons.css';
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
+const API_URL = import.meta.env.VITE_API_URL
 
 export const OrdersProviderPage = () => {
   const [favouritedBrews, setFavouritedBrews] = useState([]);
@@ -222,7 +223,7 @@ export const OrdersProviderPage = () => {
   };
 
   const authenticatedAxios = axios.create({
-    baseURL: 'http://127.0.0.1:8000',
+    baseURL: API_URL,
     headers: {
       'Authorization': `Bearer ${getAuthToken()}`
     }

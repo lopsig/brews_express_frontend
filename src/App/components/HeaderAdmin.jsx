@@ -5,7 +5,7 @@ import { Toolbar } from 'primereact/toolbar';
 import { useNavigate } from "react-router-dom";
 import useAuth from '../../auth/hooks/useAuth.jsx';
 import axios from 'axios';
-
+const API_URL = import.meta.env.VITE_API_URL
 
 export const HeaderAdmin = () => {
   const [loading, setLoading] = useState(true);
@@ -18,7 +18,7 @@ export const HeaderAdmin = () => {
   };
 
   const authenticatedAxios = axios.create({
-    baseURL: 'http://127.0.0.1:8000',
+    baseURL: API_URL,
     headers: {
       'Authorization': `Bearer ${getAuthToken()}`,
     },

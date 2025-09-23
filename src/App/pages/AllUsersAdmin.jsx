@@ -11,7 +11,7 @@ import { HeaderAdmin } from "../components/HeaderAdmin";
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
 import 'primeicons/primeicons.css';
 import 'primereact/resources/primereact.min.css';
-
+const API_URL = import.meta.env.VITE_API_URL
 // Función para calcular la edad
 const calculateAge = (birthDateString) => {
   if (!birthDateString) return 'N/A';
@@ -42,7 +42,7 @@ export const AllUsersAdmin = () => {
   };
 
   const authenticatedAxios = axios.create({
-    baseURL: 'http://127.0.0.1:8000',
+    baseURL: API_URL,
     headers: {
       'Authorization': `Bearer ${getAuthToken()}`,
     },
@@ -268,16 +268,16 @@ export const AllUsersAdmin = () => {
               sortOrder={1}
               emptyMessage="No se encontraron usuarios."
               className="p-datatable-sm"
-                // globalFilter={nameFilter || nameLastFilter || dniFilter }
+            // globalFilter={nameFilter || nameLastFilter || dniFilter }
             >
 
-                <Column header="Nombre" body={NameBodyTemplate} sortable></Column>
-                <Column header="Apellido" body={NameLastBodyTemplate} sortable></Column>
+              <Column header="Nombre" body={NameBodyTemplate} sortable></Column>
+              <Column header="Apellido" body={NameLastBodyTemplate} sortable></Column>
               <Column field="email" header="Correo" sortable></Column>
               <Column field="role" header="Rol" sortable></Column>
               <Column field="dni" header="CI" sortable></Column>
-                <Column field="phone_number" header="Teléfono"></Column>
-                <Column header="Edad" body={ageBodyTemplate} sortable></Column>
+              <Column field="phone_number" header="Teléfono"></Column>
+              <Column header="Edad" body={ageBodyTemplate} sortable></Column>
               <Column header="Acciones" body={actionBodyTemplate} style={{ width: '150px', textAlign: 'center' }}></Column>
             </DataTable>
           </div>

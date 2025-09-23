@@ -32,7 +32,7 @@
 //             Authorization: `Bearer ${token}`
 //           }
 //         }
-//         const response = await axios.get(`http://127.0.0.1:8000/brews/${brewId}`, config)
+//         const response = await axios.get(API_URL+`/brews/${brewId}`, config)
 //         setBrew(response.data.brew)
 //         setFormData({
 //           name: response.data.brew.name,
@@ -69,7 +69,7 @@
 //           'Content-Type': 'application/json'
 //         }
 //       }
-//       await axios.put(`http://127.0.0.1:8000/brews/update_brew/${brewId}`, formData, config);
+//       await axios.put(API_URL+`/brews/update_brew/${brewId}`, formData, config);
 //       alert('Producto actualizado con éxito')
 //     } catch (error) {
 //       console.error('Error updating brew:', error.response ? error.response.data : error.message)
@@ -97,7 +97,7 @@
 //           'Content-Type': 'multipart/form-data'
 //         }
 //       }
-//       const response = await axios.put(`http://127.0.0.1:8000/brews/update_brew_image/${brewId}`, data, config);
+//       const response = await axios.put(API_URL+`/brews/update_brew_image/${brewId}`, data, config);
 //       // alert('Imagen actualizada con éxito');
 //     } catch (error) {
 //       console.error('Error updating brew image:', error.response ? error.response.data : error.message);
@@ -208,6 +208,7 @@ import { Skeleton } from 'primereact/skeleton';
 import { Image } from 'primereact/image';
 import 'primeicons/primeicons.css';
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
+const API_URL = import.meta.env.VITE_API_URL
 
 export const UpdateBrewPage = () => {
   const navigate = useNavigate();
@@ -252,7 +253,7 @@ export const UpdateBrewPage = () => {
       }
       try {
         const config = { headers: { Authorization: `Bearer ${token}` } };
-        const response = await axios.get(`http://127.0.0.1:8000/brews/${brewId}`, config);
+        const response = await axios.get(API_URL + `/brews/${brewId}`, config);
         const fetchedBrew = response.data.brew;
         setBrew(fetchedBrew);
         setFormData({
@@ -296,7 +297,7 @@ export const UpdateBrewPage = () => {
           'Content-Type': 'application/json'
         }
       };
-      await axios.put(`http://127.0.0.1:8000/brews/update_brew/${brewId}`, formData, textConfig);
+      await axios.put(API_URL + `/brews/update_brew/${brewId}`, formData, textConfig);
 
       // Si hay una imagen nueva, subirla
       if (imageFile) {
@@ -308,7 +309,7 @@ export const UpdateBrewPage = () => {
             'Content-Type': 'multipart/form-data'
           }
         };
-        await axios.put(`http://127.0.0.1:8000/brews/update_brew_image/${brewId}`, imageData, imageConfig);
+        await axios.put(API_URL + `/brews/update_brew_image/${brewId}`, imageData, imageConfig);
       }
 
       setUpdateStatus({ message: 'Cerveza actualizada con éxito.', severity: 'success' });

@@ -12,6 +12,7 @@ import { Toast } from 'primereact/toast'
 import { ConfirmDialog } from 'primereact/confirmdialog'
 import { confirmDialog } from 'primereact/confirmdialog'
 import { useRef } from 'react'
+const API_URL = import.meta.env.VITE_API_URL
 
 export const BrewsProviderPage = ({ searchTerm }) => {  // ✅ Recibir searchTerm
   const [brews, setBrews] = useState([])
@@ -34,7 +35,7 @@ export const BrewsProviderPage = ({ searchTerm }) => {  // ✅ Recibir searchTer
   }
 
   const authenticatedAxios = axios.create({
-    baseURL: 'http://127.0.0.1:8000',
+    baseURL: API_URL,
     headers: {
       'Authorization': `Bearer ${getAuthToken()}`
     }
@@ -160,7 +161,7 @@ export const BrewsProviderPage = ({ searchTerm }) => {  // ✅ Recibir searchTer
     const isDeleting = deletingBrewId === brew._id
 
     const header = (
-            <div style={{
+      <div style={{
         position: 'relative',
         borderRadius: '12px 12px 0 0',
         overflow: 'hidden'
@@ -183,7 +184,7 @@ export const BrewsProviderPage = ({ searchTerm }) => {  // ✅ Recibir searchTer
           <div style={{
             width: '100%',
             height: '200px',
-              background: 'linear-gradient(135deg, #F9FAFB 0%, #E5E7EB 100%)',
+            background: 'linear-gradient(135deg, #F9FAFB 0%, #E5E7EB 100%)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center'
@@ -210,7 +211,7 @@ export const BrewsProviderPage = ({ searchTerm }) => {  // ✅ Recibir searchTer
       <div className="flex justify-content-between align-items-center">
         <div className="flex flex-wrap gap-1">
           <Badge value={brew.style} severity="info" className="mr-2" />
-          <Badge value={`${brew.abv}% ABV`} severity="warning"/>
+          <Badge value={`${brew.abv}% ABV`} severity="warning" />
         </div>
         {/* <Button
           label="Ver Detalles"
@@ -342,11 +343,11 @@ export const BrewsProviderPage = ({ searchTerm }) => {  // ✅ Recibir searchTer
             }}
           />
         </div>
-        
+
 
         <div className="grid gap-4 p-4">
-          
-          
+
+
           <div className="col-12 md:col-6 lg:col-3">
             <label htmlFor="style-filter" className="block font-medium mb-2" style={{ color: '#374151', fontSize: '0.9rem' }}>
               Estilo de Cerveza
@@ -447,7 +448,7 @@ export const BrewsProviderPage = ({ searchTerm }) => {  // ✅ Recibir searchTer
               }}
             />
 
-            
+
           </div>
         </div>
       </Panel>
@@ -462,7 +463,7 @@ export const BrewsProviderPage = ({ searchTerm }) => {  // ✅ Recibir searchTer
           fontWeight: 'bold',
           margin: 0
         }}>Mis Cervezas</h1>
-      
+
         <div className="flex align-items-center gap-2">
           <Button
             label="Agregar Cerveza"
@@ -480,34 +481,34 @@ export const BrewsProviderPage = ({ searchTerm }) => {  // ✅ Recibir searchTer
       </div>
 
       {/* Estadísticas */}
-        <div className="flex flex-wrap align-items-center gap-2">
+      <div className="flex flex-wrap align-items-center gap-2">
+        <span
+          style={{
+            background: '#F3F4F6',
+            color: '#374151',
+            padding: '6px 16px',
+            borderRadius: '20px',
+            fontSize: '0.9rem',
+            fontWeight: '600',
+            border: '1px solid #E5E7EB'
+          }}
+        >
+          {filteredBrews.length} resultado{filteredBrews.length !== 1 ? 's' : ''}
+        </span>
+        {searchTerm && (
           <span
             style={{
-              background: '#F3F4F6',
-              color: '#374151',
+              background: 'linear-gradient(135deg, #1F2937, #374151)',
+              color: 'white',
               padding: '6px 16px',
               borderRadius: '20px',
               fontSize: '0.9rem',
-              fontWeight: '600',
-              border: '1px solid #E5E7EB'
+              fontWeight: '600'
             }}
           >
-            {filteredBrews.length} resultado{filteredBrews.length !== 1 ? 's' : ''}
+            "{searchTerm}"
           </span>
-          {searchTerm && (
-            <span
-              style={{
-                background: 'linear-gradient(135deg, #1F2937, #374151)',
-                color: 'white',
-                padding: '6px 16px',
-                borderRadius: '20px',
-                fontSize: '0.9rem',
-                fontWeight: '600'
-              }}
-            >
-              "{searchTerm}"
-            </span>
-          )}
+        )}
       </div>
 
       {loading ? (

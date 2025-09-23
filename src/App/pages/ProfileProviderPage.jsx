@@ -21,7 +21,7 @@
 //             Authorization: `Bearer ${token}`
 //           }
 //         }
-//         const response = await axios.get('http://127.0.0.1:8000/breweries/brewery', config);
+//         const response = await axios.get(API_URL+'/breweries/brewery', config);
 //         setProfile(response.data.brewery);
 //         console.log("Profile:", response.data.brewery)
 //       } catch (error) {
@@ -69,6 +69,7 @@ import { Image } from 'primereact/image';
 import { Message } from 'primereact/message';
 import 'primeicons/primeicons.css';
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
+const API_URL = import.meta.env.VITE_API_URL
 
 export const ProfileProviderPage = () => {
   const [profile, setProfile] = useState(null);
@@ -109,7 +110,7 @@ export const ProfileProviderPage = () => {
             Authorization: `Bearer ${token}`
           }
         };
-        const response = await axios.get('http://127.0.0.1:8000/breweries/brewery', config);
+        const response = await axios.get(API_URL + '/breweries/brewery', config);
         setProfile(response.data.brewery);
       } catch (error) {
         console.error("Error fetching provider profile:", error.response ? error.response.data : error.message);

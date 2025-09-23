@@ -32,7 +32,7 @@
 //             Authorization: `Bearer ${token}`
 //           }
 //         }
-//         const response = await axios.get('http://127.0.0.1:8000/breweries/brewery', config);
+//         const response = await axios.get(API_URL+'/breweries/brewery', config);
 //         setProfile(response.data.brewery);
 //         setFormData({
 //           name_brewery: response.data.brewery.name_brewery,
@@ -43,7 +43,7 @@
 //           description: response.data.brewery.description,
 //           opening_hours: response.data.brewery.opening_hours
 //         });
-        
+
 //       } catch (error) {
 //         console.error("Error fetching provider profile:", error.response ? error.response.data : error.message);
 //       } finally {
@@ -69,7 +69,7 @@
 //           Authorization: `Bearer ${token}`
 //         }
 //       };
-//       await axios.put('http://127.0.0.1:8000/breweries/update_brewery', formData, config);
+//       await axios.put(API_URL+'/breweries/update_brewery', formData, config);
 //       alert('Perfil actualizado con éxito');
 //     } catch (error) {
 //       console.error("Error updating provider profile:", error.response ? error.response.data : error.message);
@@ -97,7 +97,7 @@
 //           Authorization: `Bearer ${token}`
 //         }
 //       };
-//       const response = await axios.put('http://127.0.0.1:8000/breweries/update_brewery_logo', data, config);
+//       const response = await axios.put(API_URL+'/breweries/update_brewery_logo', data, config);
 //       // alert('Logo actualizado con éxito');
 //       setProfile({ ...profile, logo: response.data.logo });
 //     } catch (error) {
@@ -151,7 +151,7 @@
 //           <label>Horario de Atención:</label>
 //           <input type="text" name="opening_hours" value={formData.opening_hours} onChange={handleTextChange} required />
 //         </div>
-    
+
 //       </form>
 
 //       <hr />
@@ -195,7 +195,7 @@ import { Skeleton } from 'primereact/skeleton';
 import { Image } from 'primereact/image';
 import 'primeicons/primeicons.css';
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
-
+const API_URL = import.meta.env.VITE_API_URL
 export const UpdateProfileProviderPage = () => {
   const navigate = useNavigate();
   const [profile, setProfile] = useState(null);
@@ -244,7 +244,7 @@ export const UpdateProfileProviderPage = () => {
         const config = {
           headers: { Authorization: `Bearer ${token}` }
         };
-        const response = await axios.get('http://127.0.0.1:8000/breweries/brewery', config);
+        const response = await axios.get(API_URL + '/breweries/brewery', config);
         const fetchedProfile = response.data.brewery;
         setProfile(fetchedProfile);
         setFormData({
@@ -287,7 +287,7 @@ export const UpdateProfileProviderPage = () => {
           Authorization: `Bearer ${token}`
         }
       };
-      await axios.put('http://127.0.0.1:8000/breweries/update_brewery', formData, textConfig);
+      await axios.put(API_URL + '/breweries/update_brewery', formData, textConfig);
 
       // Si hay un logo nuevo, subirlo
       if (logoFile) {
@@ -299,7 +299,7 @@ export const UpdateProfileProviderPage = () => {
             Authorization: `Bearer ${token}`
           }
         };
-        const logoResponse = await axios.put('http://127.0.0.1:8000/breweries/update_brewery_logo', logoData, logoConfig);
+        const logoResponse = await axios.put(API_URL + '/breweries/update_brewery_logo', logoData, logoConfig);
         setProfile({ ...profile, logo: logoResponse.data.logo });
       }
 

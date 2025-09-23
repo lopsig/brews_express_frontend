@@ -21,7 +21,7 @@
 //             Authorization: `Bearer ${token}`
 //           }
 //         }
-//         const response = await axios.get('http://127.0.0.1:8000/be/my_profile', config);
+//         const response = await axios.get(API_URL+'/be/my_profile', config);
 //         setProfile(response.data.user);
 //         console.log("Profile:", response.data.user)
 //       } catch (error) {
@@ -72,7 +72,7 @@ import { Image } from 'primereact/image';
 import { Message } from 'primereact/message';
 import 'primeicons/primeicons.css';
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
-
+const API_URL = import.meta.env.VITE_API_URL
 export const ProfileUserPage = () => {
   const [profile, setProfile] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -112,7 +112,7 @@ export const ProfileUserPage = () => {
             Authorization: `Bearer ${token}`
           }
         };
-        const response = await axios.get('http://127.0.0.1:8000/be/my_profile', config);
+        const response = await axios.get(API_URL + '/be/my_profile', config);
         setProfile(response.data.user);
       } catch (error) {
         console.error("Error fetching user profile:", error.response ? error.response.data : error.message);

@@ -19,7 +19,7 @@
 // };
 
 // const authenticatedAxios = axios.create({
-//   baseURL: 'http://127.0.0.1:8000',
+//   baseURL: API_URL,
 //   headers: {
 //     'Authorization': `Bearer ${getAuthToken()}`
 //   }
@@ -372,13 +372,13 @@ import { HeaderAdmin } from "../components/HeaderAdmin";
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
 import 'primeicons/primeicons.css';
 import 'primereact/resources/primereact.min.css';
-
+const API_URL = import.meta.env.VITE_API_URL
 const getAuthToken = () => {
   return localStorage.getItem('token') || sessionStorage.getItem('token');
 };
 
 const authenticatedAxios = axios.create({
-  baseURL: 'http://127.0.0.1:8000',
+  baseURL: API_URL,
   headers: {
     'Authorization': `Bearer ${getAuthToken()}`
   }

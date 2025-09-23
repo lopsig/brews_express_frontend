@@ -12,7 +12,7 @@ import { InputTextarea } from 'primereact/inputtextarea';
 import 'primereact/resources/themes/lara-light-indigo/theme.css';
 import 'primeicons/primeicons.css';
 import 'primereact/resources/primereact.min.css';
-
+const API_URL = import.meta.env.VITE_API_URL
 
 export const UpdateBrewAdmin = () => {
   const navigate = useNavigate();
@@ -27,7 +27,7 @@ export const UpdateBrewAdmin = () => {
   };
 
   const authenticatedAxios = axios.create({
-    baseURL: 'http://127.0.0.1:8000',
+    baseURL: API_URL,
     headers: {
       'Authorization': `Bearer ${getAuthToken()}`,
     },

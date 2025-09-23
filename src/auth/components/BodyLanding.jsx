@@ -7,6 +7,7 @@ import { InputNumber } from 'primereact/inputnumber'
 import { Panel } from 'primereact/panel'
 import { Badge } from 'primereact/badge'
 import { Skeleton } from 'primereact/skeleton'
+const API_URL = import.meta.env.VITE_API_URL
 
 export const BodyLanding = ({ searchTerm }) => {  // ✅ Recibir searchTerm como prop
   const [brews, setBrews] = useState([])
@@ -27,12 +28,12 @@ export const BodyLanding = ({ searchTerm }) => {  // ✅ Recibir searchTerm como
       setLoading(true)
       try {
         // Obtener todas las cervezas
-        const brewsResponse = await axios.get('http://127.0.0.1:8000/brews_express/all_brews')
+        const brewsResponse = await axios.get(API_URL + '/brews_express/all_brews')
         setBrews(brewsResponse.data.brews)
         setFilteredBrews(brewsResponse.data.brews)
 
         // Obtener estilos únicos para el dropdown
-        const stylesResponse = await axios.get('http://127.0.0.1:8000/brews_express/brew_styles')
+        const stylesResponse = await axios.get(API_URL + '/brews_express/brew_styles')
         setStyles(stylesResponse.data.styles.map(style => ({ label: style, value: style })))
 
       } catch (error) {
@@ -60,7 +61,7 @@ export const BodyLanding = ({ searchTerm }) => {  // ✅ Recibir searchTerm como
         if (maxPrice !== null) params.append('max_price', maxPrice)
 
         const queryString = params.toString()
-        const url = `http://127.0.0.1:8000/brews_express/search_brews${queryString ? `?${queryString}` : ''}`
+        const url = API_URL + `/brews_express/search_brews${queryString ? `?${queryString}` : ''}`
 
         const response = await axios.get(url)
         setFilteredBrews(response.data.brews)
@@ -106,18 +107,18 @@ export const BodyLanding = ({ searchTerm }) => {  // ✅ Recibir searchTerm como
             }}
           />
         ) : (
-            <div style={{
-              width: '100%',
-              height: '220px',
-              background: 'linear-gradient(135deg, #F9FAFB 0%, #E5E7EB 100%)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center'
-            }}>
-              <i className="pi pi-image" style={{ fontSize: '3rem', color: '#9CA3AF' }}></i>
+          <div style={{
+            width: '100%',
+            height: '220px',
+            background: 'linear-gradient(135deg, #F9FAFB 0%, #E5E7EB 100%)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center'
+          }}>
+            <i className="pi pi-image" style={{ fontSize: '3rem', color: '#9CA3AF' }}></i>
           </div>
         )}
-        
+
         <Badge
           value={`$${brew.price}`}
           severity="success"
@@ -175,9 +176,9 @@ export const BodyLanding = ({ searchTerm }) => {  // ✅ Recibir searchTerm como
         <div style={{ minHeight: '100px' }}>
           <p
             className="line-height-3"
-            
+
           >
-            
+
             {brew.description ?
               (brew.description.length > 120 ?
                 `${brew.description.substring(0, 120)}...` :
@@ -188,7 +189,7 @@ export const BodyLanding = ({ searchTerm }) => {  // ✅ Recibir searchTerm como
           </p>
           <div
             className="mt-3"
-            
+
           >
             <small className="text-600">
               SRM: {brew.srm} | IBU: {brew.ibu}
@@ -356,7 +357,7 @@ export const BodyLanding = ({ searchTerm }) => {  // ✅ Recibir searchTerm como
             />
           </div>
 
-          
+
         </div>
       </Panel>
 
