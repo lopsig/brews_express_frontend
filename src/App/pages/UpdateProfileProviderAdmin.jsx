@@ -490,18 +490,8 @@ export const UpdateProfileProviderAdmin = () => {
                 />
               </div>
 
-              <div className="p-field p-col-12">
-                <label htmlFor="logo">URL del Logo</label>
-                <InputText
-                  id="logo"
-                  name="logo"
-                  value={formData.logo}
-                  onChange={(e) => handleInputChange(e, 'logo')}
-                  placeholder="https://ejemplo.com/logo.jpg"
-                  className={validationErrors.logo ? 'p-invalid' : ''}
-                />
-                {validationErrors.logo && <Message severity="error" text={validationErrors.logo} />}
 
+              <div className="p-field p-col-12">
                 {formData.logo && (
                   <div style={{ marginTop: '10px' }}>
                     <p style={{ fontSize: '14px', color: '#666', marginBottom: '5px' }}>Vista previa:</p>
@@ -546,6 +536,6 @@ export const UpdateProfileProviderAdmin = () => {
           </form>
         </Card>
       </div>
-    </div>
+    </div >
   );
 };
