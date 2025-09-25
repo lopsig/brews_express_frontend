@@ -29,22 +29,8 @@ export const Header = ({ onSearch }) => {  // ✅ Agregamos prop onSearch
     { label: 'Mi Cuenta', icon: 'pi pi-user', page: '/be/profile-user' },
   ];
 
-  const downloadButtons = [
-    { label: 'Cerrar Sesión', icon: 'pi pi-sign-out', platform: 'Android' },
-  ];
 
-  const logoStyle = {
-    background: 'linear-gradient(135deg, #1F2937 0%, #374151 100%)',
-    WebkitBackgroundClip: 'text',
-    WebkitTextFillColor: 'transparent',
-    backgroundClip: 'text',
-    fontWeight: 'bold',
-    fontSize: window.innerWidth < 768 ? '1.2rem' : '1.8rem',
-    textTransform: 'uppercase',
-    letterSpacing: '0.5px',
-  };
-
-  // ✅ Función para manejar la búsqueda
+// ✅ Función para manejar la búsqueda
   const handleSearch = (e) => {
     if (e.key === 'Enter' || e.type === 'click') {
       onSearch(searchTerm);

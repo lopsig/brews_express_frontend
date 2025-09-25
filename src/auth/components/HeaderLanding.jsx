@@ -82,7 +82,7 @@ export const HeaderLanding = ({ onSearch }) => {
               icon="pi pi-times"
               className="p-button-text"
               onClick={handleClearSearch}
-              tooltip="Limpiar búsqueda"
+              tooltip="Limpiar búsqueda"Des
               style={{
                 color: '#6B7280', // Gris medio para el icono de limpiar
                 border: '2px solid #D1D5DB', // Gris claro para el borde
@@ -223,7 +223,7 @@ export const HeaderLanding = ({ onSearch }) => {
               </p>
             </div>
 
-            <ul className="list-none p-0 m-0">
+            {/* <ul className="list-none p-0 m-0">
               <li>
                 {downloadButtons.map((btn, index) => (
                   <Button
@@ -249,7 +249,7 @@ export const HeaderLanding = ({ onSearch }) => {
                   />
                 ))}
               </li>
-            </ul>
+            </ul> */}
           </nav>
         </div>
       </Sidebar>
