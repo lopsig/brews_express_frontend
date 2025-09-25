@@ -179,7 +179,7 @@ export const HeaderProvider = ({ onSearch }) => {
       <div className="flex items-center ml-3">
         <img
           height={100}
-          src="/src/assets/img/logo.png"
+          src="//logo.png"
           alt="Logo de Brews Express"
           className='mr-2'
         />
@@ -189,51 +189,51 @@ export const HeaderProvider = ({ onSearch }) => {
 
   const centerContent = (
     <React.Fragment>
-     <div className="hidden md:flex flex-grow justify-center mx-4">
-             <div className="p-inputgroup w-full max-w-md shadow-lg">
-               <InputText
-                 placeholder="Buscar cerveza artesanal..."
-                 className="w-full"
-                 value={searchTerm}
-                 onChange={(e) => setSearchTerm(e.target.value)}
-                 onKeyPress={handleSearch}
-                 style={{
-                   border: '2px solid #D1D5DB', // Gris claro para el borde
-                   borderRight: 'none',
-                   fontSize: '1rem',
-                   padding: '12px 16px',
-                   color: '#374151' // Gris oscuro para el texto del input
-                 }}
-               />
-               {searchTerm && (
-                 <Button
-                   icon="pi pi-times"
-                   className="p-button-text"
-                   onClick={handleClearSearch}
-                   tooltip="Limpiar búsqueda"
-                   style={{
-                     color: '#6B7280', // Gris medio para el icono de limpiar
-                     border: '2px solid #D1D5DB', // Gris claro para el borde
-                     borderLeft: 'none'
-                   }}
-                 />
-               )}
-               <Button
-                 icon="pi pi-search"
-                 className="p-button-primary"
-                 onClick={handleSearch}
-                 tooltip="Buscar"
-                 style={{
-                   background: '#374151', // Gris oscuro para el fondo del botón de búsqueda
-                   border: '2px solid #374151', // Gris oscuro para el borde
-                   borderLeft: 'none',
-                   color: 'white',
-                   fontWeight: 'bold',
-                   transition: 'all 0.3s ease'
-                 }}
-               />
-             </div>
-           </div>
+      <div className="hidden md:flex flex-grow justify-center mx-4">
+        <div className="p-inputgroup w-full max-w-md shadow-lg">
+          <InputText
+            placeholder="Buscar cerveza artesanal..."
+            className="w-full"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+            onKeyPress={handleSearch}
+            style={{
+              border: '2px solid #D1D5DB', // Gris claro para el borde
+              borderRight: 'none',
+              fontSize: '1rem',
+              padding: '12px 16px',
+              color: '#374151' // Gris oscuro para el texto del input
+            }}
+          />
+          {searchTerm && (
+            <Button
+              icon="pi pi-times"
+              className="p-button-text"
+              onClick={handleClearSearch}
+              tooltip="Limpiar búsqueda"
+              style={{
+                color: '#6B7280', // Gris medio para el icono de limpiar
+                border: '2px solid #D1D5DB', // Gris claro para el borde
+                borderLeft: 'none'
+              }}
+            />
+          )}
+          <Button
+            icon="pi pi-search"
+            className="p-button-primary"
+            onClick={handleSearch}
+            tooltip="Buscar"
+            style={{
+              background: '#374151', // Gris oscuro para el fondo del botón de búsqueda
+              border: '2px solid #374151', // Gris oscuro para el borde
+              borderLeft: 'none',
+              color: 'white',
+              fontWeight: 'bold',
+              transition: 'all 0.3s ease'
+            }}
+          />
+        </div>
+      </div>
 
       {/* Búsqueda para Tablet */}
       <div className="hidden md:flex lg:hidden flex-grow justify-center mx-2">
@@ -485,7 +485,7 @@ export const HeaderProvider = ({ onSearch }) => {
             }} />
             <div className="text-center mb-6 pb-4 border-b-2" style={{ borderColor: '#D1D5DB' }}>
               <img
-                src="/src/assets/img/logo.png"
+                src="//logo.png"
                 alt="Logo de Brews Express"
                 style={{ height: '100px', marginBottom: '10px' }}
               />

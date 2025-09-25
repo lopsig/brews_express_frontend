@@ -214,7 +214,7 @@ export const HeaderLanding = ({ onSearch }) => {
 
             <div className="text-center mb-6 pb-4 border-b-2" style={{ borderColor: '#D1D5DB' }}>
               <img
-                src="/src/assets/img/logo.png"
+                src="//logo.png"
                 alt="Logo de Brews Express"
                 style={{ height: '100px', marginBottom: '10px' }}
               />
