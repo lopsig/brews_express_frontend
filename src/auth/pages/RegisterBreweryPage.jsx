@@ -335,7 +335,8 @@ export const RegisterBreweryPage = () => {
         }}>
           <div>
             <img
-              src={logo}
+              // src={logo}
+              src="/logoSF.png"
               alt="Brews Express Logo"
               style={{
                 height: config.logoHeight,
