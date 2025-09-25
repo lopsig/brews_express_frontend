@@ -51,7 +51,7 @@ export const HeaderLanding = ({ onSearch }) => {
       <div className="flex items-center ml-3">
         <img
           height={100}
-          src="/src/assets/img/logo.png"
+          src="/logo.png"
           alt="Logo de Brews Express"
           className='mr-2'
         />
