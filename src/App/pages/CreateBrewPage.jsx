@@ -287,7 +287,7 @@ export const CreateBrewPage = () => {
             textAlign: 'center'
           }}>
             <img
-              src={logo}
+              src="/logoSF.png"
               alt="Brews Express Logo"
               style={{
                 height: config.logoHeight,

@@ -78,7 +78,7 @@ export const Header = ({ onSearch }) => {  // ✅ Agregamos prop onSearch
       <div className="flex items-center ml-3">
         <img
           height={100}
-          src="//logo.png"
+          src="/logo.png"
           alt="Logo de Brews Express"
           className='mr-2'
         />
@@ -386,7 +386,7 @@ export const Header = ({ onSearch }) => {  // ✅ Agregamos prop onSearch
 
             <div className="text-center mb-6 pb-4 border-b-2" style={{ borderColor: '#D1D5DB' }}>
               <img
-                src="//logo.png"
+                src="/logo.png"
                 alt="Logo de Brews Express"
                 style={{ height: '100px', marginBottom: '10px' }}
               />
