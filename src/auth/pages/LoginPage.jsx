@@ -198,7 +198,7 @@ export const LoginPage = () => {
           {/* Logo */}
           <div style={{ marginBottom: screenSize === 'mobile' ? '15px' : '30px' }}>
             <img
-              src="/src/assets/img/logoSF.png"
+              src="/logoSF.png"
               alt="Brews Express Logo"
               style={{
                 height: config.logoHeight,
